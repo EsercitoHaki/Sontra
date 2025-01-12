@@ -27,6 +27,7 @@ public class Entity : MonoBehaviour
     }
 
     protected virtual void Update() {
+        
     }
 
     #region Velocity

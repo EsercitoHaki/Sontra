@@ -5,7 +5,6 @@ public class Player : Entity
     [Header("Move info")]
     public float moveSpeed;
     public float jumpForce;
-    private float defaultJumpForce;
 
     #region States
     public PlayerStateMachine stateMachine { get; private set; }
