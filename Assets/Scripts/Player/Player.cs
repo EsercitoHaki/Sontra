@@ -13,6 +13,7 @@ public class Player : Entity
     public PlayerJumpState jumpState { get; private set; }
     public PlayerAirState airState { get; private set; }
     public PlayerFallState fallState { get; private set; }
+    public PLayerAttackState attackState { get; private set; }
     #endregion
 
     protected override void Awake() {
@@ -23,6 +24,7 @@ public class Player : Entity
         walkState = new PlayerWalkState(this, stateMachine, "Walk");
         jumpState = new PlayerJumpState(this, stateMachine, "Jump");
         airState  = new PlayerAirState(this, stateMachine, "Jump");
+        attackState = new PlayerAttackState(this, stateMachine, "Attack");
         // fallState = new PlayerFallState(this, stateMachine, "Jump");
 
     }

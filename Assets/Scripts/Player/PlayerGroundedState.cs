@@ -24,5 +24,10 @@ public class PlayerGroundedState : PlayerState
         {
             stateMachine.ChangeState(player.jumpState);
         }
+
+        if(Input.GetMouseButton(MouseButton))
+        {
+            stateMachine.ChangeState(player.attackState);
+        }
     }
 }
