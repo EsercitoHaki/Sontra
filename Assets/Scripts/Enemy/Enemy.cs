@@ -15,9 +15,14 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float groundCheckDistance;
     [SerializeField] protected LayerMask groundLayer;
     [SerializeField] protected Transform wallCheck;
+    [SerializeField] protected Transform lowWallCheck;
+    [SerializeField] protected Transform hightWallCheck;
     [SerializeField] protected float wallCheckDistance;
-
-    
+    [SerializeField] protected Transform wallCheckFlip;
+    [SerializeField] protected float wallCheckDistanceFlip;
+    [SerializeField] protected Transform findCheckPlayer;
+    [SerializeField] protected float findCheckPlayerDistance;
+    [SerializeField] protected LayerMask whatIsPlayer;
     Rigidbody2D rb;
     private bool[] isGrounded;
 
@@ -31,20 +36,25 @@ public class Enemy : MonoBehaviour
     {
         SetVelocity(moveSpeed * facingDir, rb.linearVelocity.y);
 
-        if (IsWallDetected())
+        if (isWallDetected() && isHightWallDetected() && isWallFlipDetected())
         {
             Flip();
         }
 
-        if (ShouldJump())
+        if ((isWallDetected() && isLowWallDetected() && !isHightWallDetected()) || ShouldJump())
         {
             SetVelocity(rb.linearVelocity.x, jumpForce);
+        }
+
+        if (isPlayerDetected())
+        {
+            rb.linearVelocity = new Vector2(moveSpeed, rb.linearVelocity.y);
         }
     }
 
     public bool ShouldJump()
     {
-        for(int i = 0; i < groundChecks.Length; i++)
+        for (int i = 0; i < groundChecks.Length; i++)
         {
             isGrounded[i] = Physics2D.Raycast(groundChecks[i].position, Vector2.down, groundCheckDistance, groundLayer);
         }
@@ -52,10 +62,11 @@ public class Enemy : MonoBehaviour
         return !isGrounded[2] && !isGrounded[3] && isGrounded[4];
     }
 
+
     public void SetVelocity(float _xVelocity, float _yVelocity)
     {
         rb.linearVelocity = new Vector2(_xVelocity, _yVelocity);
-        
+
     }
 
     void OnDrawGizmosSelected()
@@ -69,18 +80,22 @@ public class Enemy : MonoBehaviour
             }
         }
 
-        if (wallCheck != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(wallCheck.position, new Vector3(wallCheck.position.x + wallCheckDistance * facingDir, wallCheck.position.y));
-        }
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(wallCheck.position, new Vector3(wallCheck.position.x + wallCheckDistance * facingDir, wallCheck.position.y));
+        Gizmos.DrawLine(lowWallCheck.position, new Vector3(lowWallCheck.position.x + wallCheckDistance * facingDir, lowWallCheck.position.y));
+        Gizmos.DrawLine(hightWallCheck.position, new Vector3(hightWallCheck.position.x + wallCheckDistance * facingDir, hightWallCheck.position.y));
+        Gizmos.DrawLine(wallCheckFlip.position, new Vector3(wallCheckFlip.position.x + wallCheckDistanceFlip * facingDir, wallCheckFlip.position.y));
+        Gizmos.DrawLine(findCheckPlayer.position, new Vector3(findCheckPlayer.position.x + findCheckPlayerDistance * facingDir, findCheckPlayer.position.y));
     }
+    
+    public bool isPlayerDetected() => Physics2D.Raycast(findCheckPlayer.position, Vector2.right * facingDir, findCheckPlayerDistance, whatIsPlayer);
 
-    public bool IsWallDetected()
-    {
-        return Physics2D.Raycast(wallCheck.position, Vector2.right * facingDir, wallCheckDistance, groundLayer);
-    }
-
+    #region WallCheck
+    public bool isWallDetected() => Physics2D.Raycast(wallCheck.position, Vector2.right * facingDir, wallCheckDistance, groundLayer);
+    public bool isLowWallDetected() => Physics2D.Raycast(lowWallCheck.position, Vector2.right * facingDir, wallCheckDistance, groundLayer);
+    public bool isHightWallDetected() => Physics2D.Raycast(hightWallCheck.position, Vector2.right * facingDir, wallCheckDistance, groundLayer);
+    public bool isWallFlipDetected() => Physics2D.Raycast(wallCheckFlip.position, Vector2.right * facingDir, wallCheckDistanceFlip, groundLayer);
+    #endregion
     #region Flip
     public virtual void Flip()
     {
@@ -104,8 +119,8 @@ public class Enemy : MonoBehaviour
     public virtual void SetupDefailtFacingDir(int _direction)
     {
         facingDir = _direction;
-        
-        if(facingDir == -1)
+
+        if (facingDir == -1)
         {
             facingRight = false;
         }
