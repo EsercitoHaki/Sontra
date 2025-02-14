@@ -12,7 +12,7 @@ public class Entity : MonoBehaviour
     public int knockbackDir { get; private set; }
     public CapsuleCollider2D cd {  get; private set; }
 
-    private bool facingRight = true;
+    //private bool facingRight = true;
 
     #region Components
     public Animator anim { get; private set; }

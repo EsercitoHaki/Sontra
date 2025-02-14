@@ -24,5 +24,14 @@ public class PlayerGroundedState : PlayerState
         {
             stateMachine.ChangeState(player.jumpState);
         }
+
+        if(Input.GetKey(KeyCode.LeftShift) && xInput != 0)
+        {
+            stateMachine.ChangeState(player.runState);
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            stateMachine.ChangeState(player.idleState);
+        }
     }
 }
