@@ -12,11 +12,12 @@ public class Entity : MonoBehaviour
     public int knockbackDir { get; private set; }
     public CapsuleCollider2D cd {  get; private set; }
 
-    private bool facingRight = true;
+    //private bool facingRight = true;
 
     #region Components
     public Animator anim { get; private set; }
     public Rigidbody2D rb { get; private set; }
+    public MovementController movementController { get; private set; }
     #endregion
     protected virtual void Awake() {
 
@@ -24,54 +25,21 @@ public class Entity : MonoBehaviour
     protected virtual void Start() {
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        movementController = new MovementController(rb, transform);
     }
 
     protected virtual void Update() {
         
     }
 
-    #region Velocity
-    public virtual void SetZeroVelocity()
-    {
-        rb.linearVelocity = new Vector2(0, 0);
-    }
+   #region Delegates for MovementController
+    public void SetZeroVelocity() => movementController.SetZeroVelocity();
 
-    public virtual void SetVelocity(float _xVelocity, float _yVelocity)
-    {
-        rb.linearVelocity = new Vector2(_xVelocity, _yVelocity);
-        FlipController(_xVelocity);
-    }
-    #endregion
+    public void SetVelocity(float xVelocity, float yVelocity) => movementController.SetVelocity(xVelocity, yVelocity);
 
-    #region Flip
-    public virtual void Flip()
-    {
-        facingDir = facingDir * -1;
-        facingRight = !facingRight;
-        transform.Rotate(0, 180, 0);
-    }
+    public void Flip() => movementController.Flip();
 
-    public virtual void FlipController(float _x)
-    {
-        if (_x > 0 && !facingRight)
-        {
-            Flip();
-        }
-        else if (_x < 0 && facingRight)
-        {
-            Flip();
-        }
-    }
-
-    public virtual void SetupDefailtFacingDir(int _direction)
-    {
-        facingDir = _direction;
-        
-        if(facingDir == -1)
-        {
-            facingRight = false;
-        }
-    }
+    public void SetupDefaultFacingDir(int direction) => movementController.SetupDefailtFacingDir(direction);
     #endregion
 
     #region Collision

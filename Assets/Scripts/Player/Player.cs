@@ -13,6 +13,8 @@ public class Player : Entity
     public PlayerJumpState jumpState { get; private set; }
     public PlayerAirState airState { get; private set; }
     public PlayerFallState fallState { get; private set; }
+    public PlayerRunState runState { get; private set;}
+    public PlayerAttackState attackState { get; private set;}
     #endregion
 
     protected override void Awake() {
@@ -24,6 +26,8 @@ public class Player : Entity
         jumpState = new PlayerJumpState(this, stateMachine, "Jump");
         airState  = new PlayerAirState(this, stateMachine, "Jump");
         // fallState = new PlayerFallState(this, stateMachine, "Jump");
+        runState = new PlayerRunState(this, stateMachine, "Run");
+        attackState = new PlayerAttackState(this, stateMachine, "Attack");
 
     }
 
@@ -38,4 +42,6 @@ public class Player : Entity
 
         stateMachine.currentState.Update();
     }
+
+    public void AnimationTrigger() => stateMachine.currentState.AnimationFinishTrigger();
 }
