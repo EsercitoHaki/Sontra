@@ -14,7 +14,9 @@ public class Player : Entity
     public PlayerAirState airState { get; private set; }
     public PlayerFallState fallState { get; private set; }
     public PlayerRunState runState { get; private set;}
+
     public PlayerAttackState attackState { get; private set;}
+
     #endregion
 
     protected override void Awake() {
