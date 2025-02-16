@@ -16,6 +16,7 @@ public class Player : Entity
     public PlayerRunState runState { get; private set;}
 
     public PlayerAttackState attackState { get; private set;}
+    public PlayerShotState shotState { get; private set;}
 
     #endregion
 
@@ -30,6 +31,7 @@ public class Player : Entity
         // fallState = new PlayerFallState(this, stateMachine, "Jump");
         runState = new PlayerRunState(this, stateMachine, "Run");
         attackState = new PlayerAttackState(this, stateMachine, "Attack");
+        shotState = new PlayerShotState(this, stateMachine, "Shot");
 
     }
 

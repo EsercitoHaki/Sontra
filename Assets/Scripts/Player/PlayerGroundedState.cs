@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerGroundedState : PlayerState
 {
@@ -19,6 +20,11 @@ public class PlayerGroundedState : PlayerState
     public override void Update()
     {
         base.Update();
+
+        if(Input.GetKey(KeyCode.Mouse0))
+        {
+            stateMachine.ChangeState(player.shotState);
+        }
 
         if(Input.GetKeyDown(KeyCode.Mouse1))
         {
