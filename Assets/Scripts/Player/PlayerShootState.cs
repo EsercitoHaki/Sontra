@@ -7,6 +7,7 @@ public class PlayerShootState : PlayerState
     }
 
     public override void Enter(){
+        // player.Shoot();
         base.Enter();
     }
     
