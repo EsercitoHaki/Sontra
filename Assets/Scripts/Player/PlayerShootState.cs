@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class PlayerAttackState : PlayerState
+public class PlayerShootState : PlayerState
 {
-    public PlayerAttackState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player, _stateMachine, _animBoolName)
+    public PlayerShootState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player, _stateMachine, _animBoolName)
     {
     }
 
@@ -16,7 +16,7 @@ public class PlayerAttackState : PlayerState
 
     public override void Update(){
         base.Update();
-        if(triggerCalled)
+        if (Input.GetKeyUp(KeyCode.Mouse0))
         {
             stateMachine.ChangeState(player.idleState);
         }
