@@ -6,6 +6,10 @@ public class Player : Entity
     public float moveSpeed;
     public float jumpForce;
 
+    [Header("Bullet info")]
+    public Transform firePoint;
+    public GameObject bulletPrefab;
+
     #region States
     public PlayerStateMachine stateMachine { get; private set; }
     public PlayerIdleState idleState { get; private set; }
@@ -45,6 +49,11 @@ public class Player : Entity
         base.Update();
 
         stateMachine.currentState.Update();
+    }
+
+    public void Shoot()
+    {
+        Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
     }
 
     public void AnimationTrigger() => stateMachine.currentState.AnimationFinishTrigger();

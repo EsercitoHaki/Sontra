@@ -8,4 +8,9 @@ public class PlayerAnimationTrigger : MonoBehaviour
     {
         player.AnimationTrigger();
     }
+
+    private void CreateShoot()
+    {
+        player.Shoot();
+    }
 }
