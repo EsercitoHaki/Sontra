@@ -13,7 +13,7 @@ TagManager:
   - UI
   - Player
   - Enemy
-  - 
+  - Bullet
   - 
   - 
   - 
@@ -40,6 +40,12 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Bullet
+    uniqueID: 3190749487
+    locked: 0
+  - name: Ground
+    uniqueID: 483947265
     locked: 0
   m_RenderingLayers:
   - Default
