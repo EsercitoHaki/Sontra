@@ -21,6 +21,7 @@ public class Player : Entity
 
     public PlayerAttackState attackState { get; private set;}
     public PlayerShootState shootState { get; private set;}
+    public PlayerRechargeState rechargeState {get; private set;}
 
     #endregion
 
@@ -36,6 +37,7 @@ public class Player : Entity
         runState = new PlayerRunState(this, stateMachine, "Run");
         attackState = new PlayerAttackState(this, stateMachine, "Attack");
         shootState = new PlayerShootState(this, stateMachine, "Shoot");
+        rechargeState = new PlayerRechargeState(this, stateMachine, "Recharge");
 
     }
 

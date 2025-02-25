@@ -20,6 +20,11 @@ public class PlayerGroundedState : PlayerState
     {
         base.Update();
 
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            stateMachine.ChangeState(player.rechargeState);
+        }
+
         if(Input.GetKey(KeyCode.Mouse0))
         {
             stateMachine.ChangeState(player.shootState);
